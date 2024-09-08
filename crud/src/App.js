@@ -1,10 +1,15 @@
 
 import './App.css';
-import Lista from './components/lista'
+import {Routes, Route, BrowserRouter} from 'react-router-dom';
+import {Lista} from './components/lista';
 
 function App() {
   return (
-    <Lista></Lista>
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Lista />} />
+    </Routes>
+  </BrowserRouter>
   );
 }
 
