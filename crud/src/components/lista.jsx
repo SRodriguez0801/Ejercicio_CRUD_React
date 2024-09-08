@@ -1,9 +1,9 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { alertaSucess, alertaError, alertaWarning }  from "../funtion";
+import { alertaSucess, alertaError, alertaWarning } from "../funtion";
 import withReactContent from "sweetalert2-react-content";
-import './Usuarios.css';
 import Swal from "sweetalert2";
+import '../Usu.css';
 
 export const Lista = () => {
 
@@ -55,11 +55,11 @@ export const Lista = () => {
             url: url,
             data: parametros,
             headers: {
-                "Content-Type":"application/json",
-                "Accept":"application/json"
+                "Content-Type": "application/json",
+                "Accept": "application/json"
             }
         };
-        await axios(obj).then( () => {
+        await axios(obj).then(() => {
             let mensaje;
 
             if (metodo === 'POST') {
@@ -129,7 +129,7 @@ export const Lista = () => {
     return (
         <div className='App'>
             <div className='container-fluid mt-5'>
-            <h2>Lista de Usuarios</h2>
+                <h2>Lista de Usuarios</h2>
                 <div className='row mt-3'>
                     <div className='col-md-4 offset-md-4'>
                         <div className='d-grid mx-auto'>
@@ -140,52 +140,62 @@ export const Lista = () => {
                     </div>
                 </div>
             </div>
-    
+
             <div className='row mt-3'>
                 <div className='col-12 col-lg-8 offset-0 offset-lg-2'>
-                <div className='table-responsive'>
-                <table className='table table-striped'>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Perfil</th> 
-                            <th>Nombre</th> 
-                            <th>Rol</th> 
-                            <th>Email</th>
-                            <th>Password</th>
-                            <th>Acciones</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            usuarios.map((usuario, index) => (
-                                <tr key={usuario.id}>
-                                    <td>{index + 1}</td>
-                                    <td><img src={usuario.avatar} alt='Avatar' className='avatar' /></td> 
-                                    <td>{usuario.name}</td>
-                                    <td>{usuario.role}</td> 
-                                    <td>{usuario.email}</td>
-                                    <td>*****</td> 
-                                    <td> <button onClick={() => openModal(2, usuario.id,  usuario.name, usuario.role, usuario.email, usuario.avatar, usuario.password)} className='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalUsuarios'>
+                    <div className='table-responsive'>
+                        <table className='table table-striped'>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Perfil</th>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    usuarios.map((usuario, index) => (
+                                        <tr key={usuario.id}>
+                                            <td>{index + 1}</td>
+                                            <td>
+                                                <img 
+                                                    src={usuario.avatar ? usuario.avatar : 'https://via.placeholder.com/150'} 
+                                                    alt='Avatar' 
+                                                    className='avatar' 
+                                                />
+                                            </td>
+                                            <td>{usuario.name}</td>
+                                            <td>{usuario.role}</td>
+                                            <td>{usuario.email}</td>
+                                            <td>*****</td>
+                                            <td>
+                                                <button 
+                                                    onClick={() => openModal(2, usuario.id, usuario.name, usuario.role, usuario.email, usuario.avatar, usuario.password)} 
+                                                    className='btn btn-warning' 
+                                                    data-bs-toggle='modal' 
+                                                    data-bs-target='#modalUsuarios'
+                                                >
                                                     Editar
                                                 </button>
-                                                <button onClick={() => deleteUsuario(usuario.id)} className='btn btn-danger'>
+                                                <button 
+                                                    onClick={() => deleteUsuario(usuario.id)} 
+                                                    className='btn btn-danger'
+                                                >
                                                     Eliminar
-                                                </button></td> 
-                                    
-                                   
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-                                               
-                                     
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-    
+
             <div id='modalUsuarios' className='modal fade' aria-hidden='true'>
                 <div className='modal-dialog'>
                     <div className='modal-content'>
