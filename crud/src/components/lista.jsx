@@ -5,6 +5,7 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import '../Usu.css';
 
+
 export const Lista = () => {
 
     const url = 'https://api.escuelajs.co/api/v1/users';
@@ -127,7 +128,7 @@ export const Lista = () => {
     };
 
     return (
-        <div className='App'>
+        <div className='App '>
             <div className='container-fluid mt-5'>
                 <h2>Lista de Usuarios</h2>
                 <div className='row mt-3'>
@@ -148,12 +149,12 @@ export const Lista = () => {
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Perfil</th>
-                                    <th>Nombre</th>
-                                    <th>Rol</th>
+                                    <th>Profile</th>
+                                    <th>Name</th>
+                                    <th>Role</th>
                                     <th>Email</th>
                                     <th>Password</th>
-                                    <th>Acciones</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -175,17 +176,17 @@ export const Lista = () => {
                                             <td>
                                                 <button 
                                                     onClick={() => openModal(2, usuario.id, usuario.name, usuario.role, usuario.email, usuario.avatar, usuario.password)} 
-                                                    className='btn btn-warning' 
+                                                    className='btn btn-outline-warning' 
                                                     data-bs-toggle='modal' 
                                                     data-bs-target='#modalUsuarios'
                                                 >
-                                                    Editar
+                                                    Edit
                                                 </button>
                                                 <button 
                                                     onClick={() => deleteUsuario(usuario.id)} 
-                                                    className='btn btn-danger'
+                                                    className='btn btn-outline-danger'
                                                 >
-                                                    Eliminar
+                                                    Delet
                                                 </button>
                                             </td>
                                         </tr>
@@ -227,11 +228,11 @@ export const Lista = () => {
                             </div>
                         </div>
                         <div className='modal-footer'>
-                            <button onClick={() => validar()} className='btn btn-success'>
-                                <i className='fa-solid fa-save'></i> Guardar
+                            <button onClick={() => validar()} className='btn btn-outline-success'>
+                                <i className='fa-solid fa-save'></i> Keep
                             </button>
-                            <button id='btnCerrarModal' type='button' className='btn btn-secondary' data-bs-dismiss='modal'>
-                                Cerrar
+                            <button id='btnCerrarModal' type='button' className='btn btn-outline-secondary' data-bs-dismiss='modal'>
+                                Close
                             </button>
                         </div>
                     </div>
