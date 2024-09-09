@@ -174,20 +174,20 @@ export const Lista = () => {
                                             <td>{usuario.email}</td>
                                             <td>*****</td>
                                             <td>
-                                                <button 
+                                                <span 
                                                     onClick={() => openModal(2, usuario.id, usuario.name, usuario.role, usuario.email, usuario.avatar, usuario.password)} 
-                                                    className='btn btn-outline-warning' 
+                                                    className='btn badge btn-warning' 
                                                     data-bs-toggle='modal' 
                                                     data-bs-target='#modalUsuarios'
                                                 >
                                                     Edit
-                                                </button>
-                                                <button 
+                                                </span>
+                                                <span 
                                                     onClick={() => deleteUsuario(usuario.id)} 
-                                                    className='btn btn-outline-danger'
+                                                    className='btn badge btn-danger'
                                                 >
                                                     Delet
-                                                </button>
+                                                </span>
                                             </td>
                                         </tr>
                                     ))}
@@ -228,12 +228,12 @@ export const Lista = () => {
                             </div>
                         </div>
                         <div className='modal-footer'>
-                            <button onClick={() => validar()} className='btn btn-outline-success'>
+                            <span onClick={() => validar()} className='btn badge btn-success'>
                                 <i className='fa-solid fa-save'></i> Keep
-                            </button>
-                            <button id='btnCerrarModal' type='button' className='btn btn-outline-secondary' data-bs-dismiss='modal'>
+                            </span>
+                            <span id='btnCerrarModal' type='button' className='btn badge btn-secondary' data-bs-dismiss='modal'>
                                 Close
-                            </button>
+                            </span>
                         </div>
                     </div>
                 </div>
