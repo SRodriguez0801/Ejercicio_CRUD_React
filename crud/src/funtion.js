@@ -43,6 +43,8 @@ const alertaConfirmation =(mensaje) => {
     });
 }
 
+
+
 const onFocus = (id) => {
     if (id !== ''){
         document.getElementById(id).focus();
