@@ -5,7 +5,6 @@ import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import '../Usu.css';
 
-
 export const Lista = () => {
 
     const url = 'https://api.escuelajs.co/api/v1/users';
@@ -19,19 +18,36 @@ export const Lista = () => {
     const [titleModal, setTitleModal] = useState('');
     const [operation, setOperation] = useState(1);
 
+    // Guardar usuarios en localStorage
+    const saveUsuariosToLocalStorage = (users) => {
+        localStorage.setItem('usuarios', JSON.stringify(users));
+    };
+
+    // Obtener usuarios desde localStorage
+    const getUsuariosFromLocalStorage = () => {
+        const storedUsers = localStorage.getItem('usuarios');
+        return storedUsers ? JSON.parse(storedUsers) : [];
+    };
+
+    // Obtener usuarios desde la API o localStorage
     const getUsuarios = async () => {
-        try {
-            const response = await axios.get(url);
-            setUsuarios(response.data);
-        } catch (error) {
-            console.error('Error al obtener usuarios:', error);
-            alert('Error al obtener usuarios');
+        const storedUsers = getUsuariosFromLocalStorage();
+        if (storedUsers.length > 0) {
+            setUsuarios(storedUsers);
+        } else {
+            try {
+                const response = await axios.get(url);
+                setUsuarios(response.data);
+                saveUsuariosToLocalStorage(response.data); // Guardar en localStorage después de obtener de la API
+            } catch (error) {
+                console.error('Error al obtener usuarios:', error);
+                alert('Error al obtener usuarios');
+            }
         }
     };
 
     useEffect(() => {
-        getUsuarios();
-    }, []);
+        getUsuarios(); }, []);
 
     const openModal = (operation, id, name, role, email, avatar, password) => {
         setId(id);
@@ -62,17 +78,23 @@ export const Lista = () => {
         };
         await axios(obj).then(() => {
             let mensaje;
+            let updatedUsers = [];
 
             if (metodo === 'POST') {
                 mensaje = 'Se guardó el usuario';
+                updatedUsers = [...usuarios, parametros]; // Añadir nuevo usuario a la lista
             } else if (metodo === 'PUT') {
                 mensaje = 'Se editó el usuario';
+                updatedUsers = usuarios.map(user => user.id === id ? parametros : user); // Actualizar usuario existente
             } else if (metodo === 'DELETE') {
                 mensaje = 'Se eliminó el usuario';
+                updatedUsers = usuarios.filter(user => user.id !== id); // Eliminar usuario de la lista
             }
+
             alertaSucess(mensaje);
+            setUsuarios(updatedUsers); // Actualizar el estado
+            saveUsuariosToLocalStorage(updatedUsers); // Guardar cambios en localStorage
             document.getElementById('btnCerrarModal').click();
-            getUsuarios();
         }).catch((error) => {
             alertaError(error.response.data.message);
             console.log(error);
@@ -112,13 +134,12 @@ export const Lista = () => {
         MySwal.fire({
             title: '¿Está seguro de eliminar el usuario?',
             icon: 'question',
-            text: 'El usuario se eliminará de forma permanente?',
+            text: 'El usuario se eliminará de forma permanente',
             showCancelButton: true,
             confirmButtonText: 'Eliminar',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                setId(id);
                 enviarSolicitud(urlDelete, 'DELETE', {});
             }
         }).catch((error) => {
@@ -127,10 +148,11 @@ export const Lista = () => {
         });
     };
 
+
     return (
         <div className='App '>
             <div className='container-fluid mt-5'>
-                <h2>Lista de Usuarios</h2>
+                <h2>Lista de Proveedores</h2>
                 <div className='row mt-3'>
                     <div className='col-md-4 offset-md-4'>
                         <div className='d-grid mx-auto'>
